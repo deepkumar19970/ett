@@ -19,6 +19,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyUserDetailService userDetailsService;
 
+    @Autowired
+    private CustomSuccessHandler customSuccessHandler;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -29,33 +32,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .authorizeRequests()
-//                .antMatchers("/").access("hasRole('ADMIN')")
-//                .and()
-                .authorizeRequests().antMatchers("/Register","/resources/").permitAll()
+                .authorizeRequests().antMatchers("/Register","/resources/**","/resources/***","/resources/****","/resources/*****","/resources/******","/resources/*").permitAll()
                 .and()
-                .formLogin().loginPage("/Login").loginProcessingUrl("/loginAction").successForwardUrl("/").permitAll()
-                .failureUrl("/Login?error")
+                .formLogin().loginPage("/Login").permitAll()
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .successHandler(customSuccessHandler)
+                .failureUrl("/Login?error=true")
                 .usernameParameter("username").passwordParameter("password")
                 .and()
-                .logout().logoutSuccessUrl("/Login?error")
+                .logout().logoutUrl("/Logout")
                 .and()
                 .authorizeRequests().anyRequest().authenticated();
 
         http.csrf().disable();
-
-
-//        http.authorizeRequests()
-//                .antMatchers("/loginAction**").access("hasRole('ADMIN')")
-//                .and()
-//                .formLogin().loginPage("/loginAction")
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/loginAction?error")
-//                .usernameParameter("username").passwordParameter("password")
-//                .and()
-//                .logout().logoutSuccessUrl("/loginAction?logout");
     }
+
+//    @Bean
+//    public CustomSuccessHandler successHandler() {
+//        return new CustomSuccessHandler();
+//    }
 }

@@ -2479,6 +2479,7 @@ function init_calendar() {
 
 function init_DataTables() {
 
+
     console.log('run_datatables');
 
     if (typeof ($.fn.DataTable) === 'undefined') { return; }
@@ -2491,23 +2492,23 @@ function init_DataTables() {
                 buttons: [
                     {
                         extend: "copy",
-                        className: "btn-sm"
+                        className: "btn btn-round btn-secondary"
                     },
                     {
                         extend: "csv",
-                        className: "btn-sm"
+                        className: "btn btn-round btn-secondary"
                     },
                     {
                         extend: "excel",
-                        className: "btn-sm"
+                        className: "btn btn-round btn-secondary"
                     },
                     {
                         extend: "pdfHtml5",
-                        className: "btn-sm"
+                        className: "btn btn-round btn-secondary"
                     },
                     {
                         extend: "print",
-                        className: "btn-sm"
+                        className: "btn btn-round btn-secondary"
                     },
                 ],
                 responsive: true
